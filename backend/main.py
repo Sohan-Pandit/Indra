@@ -49,7 +49,7 @@ logger = logging.getLogger(__name__)
 async def annotate(request: AnnotateRequest, x_api_key: str = Header(...)):
     # No API key provided
     if not x_api_key or x_api_key == "PLACEHOLDER_API_KEY" or x_api_key == "test_key":
-        raise HTTPException(status_code=401, detail="No API key provided. Please enter a valid Gemini, Anthropic, or OpenAI key.")
+        raise HTTPException(status_code=401, detail="No API key provided. Please enter a valid key from: Google Gemini (AIza...), Anthropic (sk-ant-...), OpenAI (sk-...), Grok/xAI (xai-...), or Groq (gsk_...).")
 
 
     try:

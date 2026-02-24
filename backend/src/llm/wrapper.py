@@ -4,25 +4,41 @@ import time
 
 
 def _detect_provider(api_key: str) -> str:
-    """Detect AI provider from API key prefix."""
+    """Detect AI provider from API key prefix.
+
+    Key prefixes:
+      AIza...       -> Google Gemini
+      sk-ant-...    -> Anthropic Claude
+      xai-...       -> Grok (xAI)
+      gsk_...       -> Groq
+      sk-...        -> OpenAI (default for sk- prefix)
+    """
     if api_key.startswith("AIza"):
         return "gemini"
     elif api_key.startswith("sk-ant-"):
         return "anthropic"
+    elif api_key.startswith("xai-"):
+        return "grok"
+    elif api_key.startswith("gsk_"):
+        return "groq"
     elif api_key.startswith("sk-"):
         return "openai"
     else:
         return "gemini"  # default fallback
 
 
+# OpenAI-compatible providers: base URL + default model
+_OPENAI_COMPAT = {
+    "openai":   ("https://api.openai.com/v1",        "gpt-4o-mini"),
+    "grok":     ("https://api.x.ai/v1",              "grok-beta"),
+    "groq":     ("https://api.groq.com/openai/v1",   "llama-3.3-70b-versatile"),
+}
+
+
 class LLMWrapper:
     """
     Unified LLM wrapper that auto-detects provider from API key format.
-
-    Key prefixes:
-      AIza...       -> Google Gemini (google-genai SDK)
-      sk-ant-...    -> Anthropic Claude
-      sk-...        -> OpenAI
+    Supports: Google Gemini, Anthropic Claude, OpenAI, Grok (xAI), Groq.
     """
 
     def __init__(self, api_key: str, model_name: Optional[str] = None, max_retries: int = 3):
@@ -37,9 +53,10 @@ class LLMWrapper:
         elif self.provider == "anthropic":
             self.model_name = model_name or "claude-3-5-haiku-20241022"
             self._init_anthropic()
-        elif self.provider == "openai":
-            self.model_name = model_name or "gpt-4o-mini"
-            self._init_openai()
+        elif self.provider in _OPENAI_COMPAT:
+            base_url, default_model = _OPENAI_COMPAT[self.provider]
+            self.model_name = model_name or default_model
+            self._init_openai_compat(base_url)
 
     def _init_gemini(self):
         from google import genai
@@ -49,9 +66,9 @@ class LLMWrapper:
         import anthropic
         self._client = anthropic.Anthropic(api_key=self.api_key)
 
-    def _init_openai(self):
+    def _init_openai_compat(self, base_url: str):
         from openai import OpenAI
-        self._client = OpenAI(api_key=self.api_key)
+        self._client = OpenAI(api_key=self.api_key, base_url=base_url)
 
     def generate(self, prompt: str, system_instruction: Optional[str] = None, max_tokens: int = 2048) -> str:
         """Generate content using the detected provider."""
@@ -61,7 +78,7 @@ class LLMWrapper:
                     return self._generate_gemini(prompt, system_instruction, max_tokens)
                 elif self.provider == "anthropic":
                     return self._generate_anthropic(prompt, system_instruction, max_tokens)
-                elif self.provider == "openai":
+                elif self.provider in _OPENAI_COMPAT:
                     return self._generate_openai(prompt, system_instruction, max_tokens)
             except Exception as e:
                 if attempt == self.max_retries - 1:
