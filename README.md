@@ -1,20 +1,75 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Indra
 
-# Run and deploy your AI Studio app
+**Distill Extreme Events Research Abstracts**
 
-This contains everything you need to run your app locally.
+Indra is a web application that extracts structured climate impact data from scientific research abstracts using LLMs. Paste any abstract about an extreme weather event and get back a structured JSON record with hazard type, location, impact domain, uncertainty analysis, and more.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1gVaCtGOZd0e1mD1eU_-lIg4ccJFPkC9b
+---
+
+## Features
+
+- Structured extraction of climate impact metadata from research abstracts
+- Supports multiple LLM providers — bring your own API key
+- Uncertainty analysis and secondary impact detection
+- Clean, fast React frontend
+
+## Supported API Keys
+
+| Provider | Key Format |
+|---|---|
+| Google Gemini | `AIza...` |
+| Anthropic Claude | `sk-ant-...` |
+| OpenAI | `sk-...` |
+| Grok (xAI) | `xai-...` |
+| Groq | `gsk_...` |
+
+---
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
+### Frontend
 
+**Prerequisites:** Node.js
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+npm install
+npm run dev
+```
+
+### Backend
+
+**Prerequisites:** Python 3.10+
+
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+```
+
+The frontend runs on `http://localhost:3000` and calls the backend at `http://localhost:8001`.
+
+---
+
+## Project Structure
+
+```
+indra/
+├── backend/
+│   ├── main.py               # FastAPI app
+│   ├── requirements.txt
+│   └── src/
+│       ├── annotation/       # LLM labeling pipeline
+│       ├── extraction/       # NER models
+│       ├── llm/              # Unified LLM wrapper
+│       ├── schema/           # Impact schema & validation
+│       ├── uncertainty/      # Hedge detection
+│       └── visualization/    # Knowledge graph
+├── components/               # React components
+├── services/                 # API service layer
+├── App.tsx
+└── index.tsx
+```
+
+---
+
+## Built by Sohan Pandit
