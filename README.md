@@ -1,75 +1,41 @@
 # Indra
 
-**Distill Extreme Events Research Abstracts**
+Extract structured climate impact data from research abstracts.
 
-Indra is a web application that extracts structured climate impact data from scientific research abstracts using LLMs. Paste any abstract about an extreme weather event and get back a structured JSON record with hazard type, location, impact domain, uncertainty analysis, and more.
-
----
-
-## Features
-
-- Structured extraction of climate impact metadata from research abstracts
-- Supports multiple LLM providers — bring your own API key
-- Uncertainty analysis and secondary impact detection
-- Clean, fast React frontend
-
-## Supported API Keys
-
-| Provider | Key Format |
-|---|---|
-| Google Gemini | `AIza...` |
-| Anthropic Claude | `sk-ant-...` |
-| OpenAI | `sk-...` |
-| Grok (xAI) | `xai-...` |
-| Groq | `gsk_...` |
+Paste an abstract → get back hazard type, location, impact domain, uncertainty analysis, and a full JSON record. Bring your own API key (Gemini, OpenAI, Anthropic, Grok, Groq).
 
 ---
 
-## Run Locally
+## Run locally
 
-### Frontend
-
-**Prerequisites:** Node.js
-
+**Frontend**
 ```bash
 npm install
 npm run dev
 ```
 
-### Backend
-
-**Prerequisites:** Python 3.10+
-
+**Backend**
 ```bash
 cd backend
 pip install -r requirements.txt
-uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+uvicorn main:app --port 8001 --reload
 ```
 
-The frontend runs on `http://localhost:3000` and calls the backend at `http://localhost:8001`.
+Frontend → `localhost:3000`, Backend → `localhost:8001`
 
 ---
 
-## Project Structure
+## Project layout
 
 ```
-indra/
 ├── backend/
-│   ├── main.py               # FastAPI app
-│   ├── requirements.txt
+│   ├── main.py
 │   └── src/
-│       ├── annotation/       # LLM labeling pipeline
-│       ├── extraction/       # NER models
-│       ├── llm/              # Unified LLM wrapper
-│       ├── schema/           # Impact schema & validation
-│       ├── uncertainty/      # Hedge detection
-│       └── visualization/    # Knowledge graph
-├── components/               # React components
-├── services/                 # API service layer
-├── App.tsx
-└── index.tsx
+│       ├── annotation/
+│       ├── llm/
+│       ├── schema/
+│       └── uncertainty/
+├── components/
+├── services/
+└── App.tsx
 ```
-
----
-
-## Built by Sohan Pandit
