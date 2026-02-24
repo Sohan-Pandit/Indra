@@ -11,6 +11,7 @@ def _detect_provider(api_key: str) -> str:
       sk-ant-...    -> Anthropic Claude
       xai-...       -> Grok (xAI)
       gsk_...       -> Groq
+      sk-or-...     -> OpenRouter
       sk-...        -> OpenAI (default for sk- prefix)
     """
     if api_key.startswith("AIza"):
@@ -21,6 +22,8 @@ def _detect_provider(api_key: str) -> str:
         return "grok"
     elif api_key.startswith("gsk_"):
         return "groq"
+    elif api_key.startswith("sk-or-"):
+        return "openrouter"
     elif api_key.startswith("sk-"):
         return "openai"
     else:
@@ -29,9 +32,10 @@ def _detect_provider(api_key: str) -> str:
 
 # OpenAI-compatible providers: base URL + default model
 _OPENAI_COMPAT = {
-    "openai":   ("https://api.openai.com/v1",        "gpt-4o-mini"),
-    "grok":     ("https://api.x.ai/v1",              "grok-beta"),
-    "groq":     ("https://api.groq.com/openai/v1",   "llama-3.3-70b-versatile"),
+    "openai":      ("https://api.openai.com/v1",          "gpt-4o-mini"),
+    "grok":        ("https://api.x.ai/v1",                "grok-beta"),
+    "groq":        ("https://api.groq.com/openai/v1",     "llama-3.3-70b-versatile"),
+    "openrouter":  ("https://openrouter.ai/api/v1",       "openai/gpt-4o-mini"),
 }
 
 
