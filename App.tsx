@@ -364,7 +364,7 @@ const App: React.FC = () => {
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500 bg-[length:200%_auto] animate-[gradient_8s_linear_infinite]">Impact.</span>
                   </h1>
                   <p className="text-2xl text-slate-500 dark:text-slate-400 max-w-3xl mx-auto font-light leading-relaxed animate-reveal [animation-delay:400ms]">
-                    Distill extreme events and natural hazard research abstracts into actionable vector data, <br />mapping global climate signals with AI precision.
+                    Distill extreme events and natural hazard research abstracts <br/> into actionable vector data, <br/>mapping global climate signals with AI precision.
                   </p>
                 </div>
               )}
