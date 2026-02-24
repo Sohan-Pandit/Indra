@@ -1,0 +1,5 @@
+{
+  "name": "Indra",
+  "description": "Expert annotator for climate impact literature built for the CLIMPACT-TEXT research pipeline.",
+  "requestFramePermissions": []
+}

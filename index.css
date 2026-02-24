@@ -1,0 +1,80 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cursor-x: 0px;
+  --cursor-y: 0px;
+}
+
+html {
+  cursor: none;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #020617;
+}
+
+/* Sophisticated custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-emerald-500/10 rounded-full hover:bg-emerald-500/30 transition-colors;
+}
+
+/* Text reveal animation */
+@keyframes text-reveal {
+  from {
+    filter: blur(10px);
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-reveal {
+  animation: text-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Glassmorphism refinements */
+.glass-panel {
+  @apply bg-white/70 dark:bg-slate-950/40 backdrop-blur-2xl border border-slate-200/50 dark:border-white/5 shadow-2xl;
+}
+
+/* Magnetic interaction hint */
+.magnetic-target {
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.magnetic-target:hover {
+  transform: scale(1.02) translateY(-2px);
+}
+
+/* Grid shimmer */
+@keyframes grid-shimmer {
+  0% { opacity: 0.02; }
+  50% { opacity: 0.05; }
+  100% { opacity: 0.02; }
+}
+
+.bg-grid-animate {
+  animation: grid-shimmer 8s ease-in-out infinite;
+}
+
+/* Ensure interactive elements still show the custom cursor state change correctly */
+button, a, input, textarea, [role="button"] {
+  cursor: none;
+}
