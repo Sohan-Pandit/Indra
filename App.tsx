@@ -364,7 +364,7 @@ const App: React.FC = () => {
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500 bg-[length:200%_auto] animate-[gradient_8s_linear_infinite]">Impact.</span>
                   </h1>
                   <p className="text-2xl text-slate-500 dark:text-slate-400 max-w-3xl mx-auto font-light leading-relaxed animate-reveal [animation-delay:400ms]">
-                    Distill research abstracts into actionable vector data, <br />mapping global climate signals with AI precision.
+                    Distill extreme events and natural hazard research abstracts into actionable vector data, <br />mapping global climate signals with AI precision.
                   </p>
                 </div>
               )}
@@ -385,7 +385,7 @@ const App: React.FC = () => {
                     <textarea
                       value={abstract}
                       onChange={(e) => setAbstract(e.target.value)}
-                      placeholder="Insert research text here for distillation..."
+                      placeholder="Insert extreme event related research text here for distillation..."
                       className="w-full h-72 p-10 bg-slate-50/50 dark:bg-slate-950/30 border border-slate-200 dark:border-slate-800/50 rounded-[3rem] outline-none focus:ring-[12px] focus:ring-emerald-500/5 focus:border-emerald-500/40 transition-all font-serif leading-relaxed text-2xl resize-none shadow-inner"
                     />
                   </div>
